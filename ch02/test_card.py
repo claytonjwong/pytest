@@ -91,8 +91,12 @@ def test_raises_with_info_alt():
 # structuring test functions
 #
 
-# arrange, act, assert
 # given, when, then
+# arrange, act, assert
+
+# Given/Arrange - a starting state.  This is where you set up data or the environment to get ready for the action
+# When/Act - some action is peformed.  This is the focus of the test - the behavior we are trying to make sure is working right
+# Then/Assert - some expected result or end state should happen.  At the end of the test, we make sure the action resulted in the expected behavior
 
 def test_to_dict():
     # GIVEN a Card object with known contents
