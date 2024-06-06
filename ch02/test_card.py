@@ -71,3 +71,18 @@ def test_identical_fail():
     c1 = Card('foo', id=123)
     c2 = Card('foo', id=456)
     assert_identical(c1, c2)
+
+#
+# testing for expected exceptions
+#
+import cards
+
+def test_no_path_fail():
+    with pytest.raises(TypeError):
+        cards.CardsDB()
+
+def test_raises_with_info_alt():
+    with pytest.raises(TypeError) as exec_info:
+        cards.CardsDB()
+    expected = 'missing 1 required positional argument'
+    assert expected in str(exec_info.value)
