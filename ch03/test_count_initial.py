@@ -1,7 +1,11 @@
-from pathlib import Path
-from tempfile import TemporaryDirectory
 import cards
+from pathlib import Path
+import pytest
+from tempfile import TemporaryDirectory
 
+#
+# without fixtures
+#
 def test_empty():
     with TemporaryDirectory() as db_dir:
         db_path = Path(db_dir)
@@ -9,3 +13,17 @@ def test_empty():
         count = db.count()
         db.close()
         assert count == 0
+
+#
+# with fixtures
+#
+@pytest.fixture()
+def cards_db():
+    with TemporaryDirectory() as db_dir:
+        db_path = Path(db_dir)
+        db = cards.CardsDB(db_path)
+        yield db
+        db.close()
+
+def test_empty(cards_db):
+    assert cards_db.count() == 0
