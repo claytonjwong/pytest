@@ -3,7 +3,21 @@ from tempfile import TemporaryDirectory
 import cards
 import pytest
 
-@pytest.fixture(scope='session')
+def pytest_addoption(parser):
+    parser.addoption(
+        '--func-db',
+        action='store_true',
+        default=False,
+        help='new db for each test'
+    )
+
+def db_scope(fixture_name, config):
+    print(f'fixture_name: {fixture_name}')
+    if config.getoption('--func-db', None):
+        return 'function'
+    return 'session'
+
+@pytest.fixture(scope=db_scope)
 def db():
     """CardsDB object connected to a temporary database"""
     with TemporaryDirectory() as db_dir:
